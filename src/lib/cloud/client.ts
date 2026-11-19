@@ -42,7 +42,7 @@ export function friendlyError(e: unknown): string {
   if (/Failed to fetch|NetworkError|network/i.test(msg)) return 'No connection to the server. Check your internet and try again.';
   // Supabase Auth times out (504) or reports a send error when the SMTP settings are wrong
   if (/HTTP 50[234]|timeout|sending .*email|smtp/i.test(msg))
-    return "Hindi maipadala ang email ngayon. Problema ito sa email server ng gym, hindi sa'yo. Subukan ulit mamaya o kausapin ang front desk.";
+    return "We couldn't send the email right now. This is a problem with the gym's email server, not with you. Try again later or ask the front desk.";
   if (/JWT expired|invalid claim/i.test(msg)) return 'Your session expired. Please sign in again.';
   return msg.length < 160 ? msg : 'Something went wrong. Please try again.';
 }

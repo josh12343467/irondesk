@@ -380,7 +380,7 @@ export function CloudStoreProvider({ children }: { children: ReactNode }) {
       const issued = Number(localStorage.getItem(ISSUED_KEY) || Date.now());
       const left = lastActiveRef.current + IDLE_LIMIT_MS[kind] - Date.now();
       if (left <= 0 || Date.now() - issued > ABSOLUTE_LIMIT_MS) {
-        actions.logout('Na-sign out ka para sa security dahil matagal kang walang activity. Mag-sign in ulit.');
+        actions.logout('You were signed out for security after a period of inactivity. Please sign in again.');
         return;
       }
       setIdleSecondsLeft(left <= IDLE_WARNING_MS ? Math.ceil(left / 1000) : null);

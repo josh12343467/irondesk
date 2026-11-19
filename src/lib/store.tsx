@@ -702,7 +702,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const limit = IDLE_LIMIT_MS[session.kind];
       const left = lastActiveRef.current + limit - now;
       if (left <= 0 || now - session.issuedAt > ABSOLUTE_LIMIT_MS) {
-        actions.logout('Na-sign out ka para sa security dahil matagal kang walang activity. Mag-sign in ulit.');
+        actions.logout('You were signed out for security after a period of inactivity. Please sign in again.');
         return;
       }
       setIdleSecondsLeft(left <= IDLE_WARNING_MS ? Math.ceil(left / 1000) : null);

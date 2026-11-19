@@ -75,7 +75,7 @@ export const fmtHour = (h: number) => (h === 0 ? '12a' : h < 12 ? `${h}a` : h ==
 
 export function greeting() {
   const h = new Date().getHours();
-  return h < 12 ? 'Magandang umaga' : h < 18 ? 'Magandang hapon' : 'Magandang gabi';
+  return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
 }
 
 export const initials = (name: string) =>

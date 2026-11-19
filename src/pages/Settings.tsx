@@ -254,7 +254,7 @@ function PlansTab() {
 
   const remove = (p: Plan) => {
     if (members.some((m) => m.planId === p.id)) {
-      alert(`Can't delete “${p.name}”: may mga member pa na naka-${p.name}. Move them to another plan first.`);
+      alert(`Can't delete “${p.name}”: some members are still on this plan. Move them to another plan first.`);
       return;
     }
     if (confirm(`Delete the ${p.name} plan?`)) actions.deletePlan(p.id);

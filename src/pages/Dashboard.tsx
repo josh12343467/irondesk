@@ -149,7 +149,7 @@ export default function Dashboard() {
             }
           />
           {data.expiring.length === 0 ? (
-            <EmptyState icon={AlertTriangle} title="Walang mag-e-expire this week" text="All memberships are good for at least 7 days." />
+            <EmptyState icon={AlertTriangle} title="No memberships expiring this week" text="All memberships are good for at least 7 days." />
           ) : (
             <ul className="divide-y divide-zinc-800/80 px-2 pb-2">
               {data.expiring.slice(0, 6).map((m) => (
@@ -209,7 +209,7 @@ export default function Dashboard() {
           }
         />
         {todaysClasses.length === 0 ? (
-          <EmptyState icon={CalendarDays} title="No group classes today" text="Open gym lang today." />
+          <EmptyState icon={CalendarDays} title="No group classes today" text="Open gym only today." />
         ) : (
           <div className="grid gap-2 px-4 pb-4 sm:grid-cols-2 lg:grid-cols-3">
             {todaysClasses.map(({ cls, booked }) => (

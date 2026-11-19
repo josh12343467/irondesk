@@ -43,7 +43,7 @@ export default function CheckIn() {
     const id = parseMemberQr(text.trim());
     const m = id ? memberById.get(id) : undefined;
     if (!m) {
-      setToast({ type: 'err', msg: id ? 'QR is valid but that member no longer exists.' : 'Hindi IronDesk member QR ang na-scan.' });
+      setToast({ type: 'err', msg: id ? 'QR is valid but that member no longer exists.' : "That's not an IronDesk member QR code." });
       return;
     }
     checkIn(m, 'qr');
@@ -58,7 +58,7 @@ export default function CheckIn() {
   function checkIn(m: Member, via: 'search' | 'qr' = 'search') {
     const status = memberStatus(m);
     if (status === 'expired') {
-      setToast({ type: 'err', msg: `${m.name}'s membership expired ${relativeDays(daysLeft(m))}. Renew muna bago pumasok.` });
+      setToast({ type: 'err', msg: `${m.name}'s membership expired ${relativeDays(daysLeft(m))}. They need to renew before entering.` });
       setQ(m.name);
       return;
     }
@@ -71,7 +71,7 @@ export default function CheckIn() {
     const first = m.name.split(' ')[0];
     setToast({
       type: status === 'expiring' ? 'warn' : 'ok',
-      msg: status === 'expiring' ? `Welcome, ${first}! Paalala: membership expires ${relativeDays(daysLeft(m))}.` : `Welcome, ${first}! Checked in ✅`,
+      msg: status === 'expiring' ? `Welcome, ${first}! Reminder: membership expires ${relativeDays(daysLeft(m))}.` : `Welcome, ${first}! Checked in ✅`,
     });
     setQ('');
     inputRef.current?.focus();

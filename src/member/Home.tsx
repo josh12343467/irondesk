@@ -60,8 +60,8 @@ export default function MemberHome() {
           {status === 'expired' ? <XCircle size={18} className="mt-0.5 shrink-0" /> : <TriangleAlert size={18} className="mt-0.5 shrink-0" />}
           <span>
             {status === 'expired'
-              ? `Your membership expired ${relativeDays(left)}. Mag-renew sa front desk para makapasok ulit.`
-              : `Your membership expires ${relativeDays(left)}. Mag-renew sa front desk para tuloy-tuloy ang training.`}
+              ? `Your membership expired ${relativeDays(left)}. Renew at the front desk to get back in.`
+              : `Your membership expires ${relativeDays(left)}. Renew at the front desk to keep training without a break.`}
           </span>
         </div>
       )}
@@ -80,7 +80,7 @@ export default function MemberHome() {
           <div className={cn('rounded-2xl bg-white p-3', status === 'expired' && 'opacity-40 grayscale')}>
             <QrCode value={memberQrValue(m.id)} size={190} />
           </div>
-          <p className="mt-3 text-center text-xs text-zinc-500">Ipakita ang QR na 'to sa front desk para mag-check in.</p>
+          <p className="mt-3 text-center text-xs text-zinc-500">Show this QR code at the front desk to check in.</p>
         </div>
         <div className="border-t border-zinc-800 px-5 py-4">
           <div className="flex items-baseline justify-between text-sm">
@@ -124,7 +124,7 @@ export default function MemberHome() {
             </div>
           </div>
         ) : (
-          <p className="text-sm text-zinc-500">No upcoming classes. Mag-book na para may kasama kang mag-sweat! 🔥</p>
+          <p className="text-sm text-zinc-500">No upcoming classes. Book one and sweat it out with the crew! 🔥</p>
         )}
         {data.upcoming.length > 1 && <p className="mt-2 text-xs text-zinc-500">+{data.upcoming.length - 1} more booked</p>}
       </Card>

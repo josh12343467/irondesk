@@ -28,8 +28,8 @@ export default function Login() {
 
   function explain(r: LoginResult, m: Mode) {
     if (r.ok) return '';
-    if (r.lockedMs) return `Too many failed attempts. Naka-lock muna ng ${mins(r.lockedMs)} minuto para sa security.`;
-    const base = m === 'staff' ? 'Mali ang username o password.' : 'Mali ang mobile number o PIN.';
+    if (r.lockedMs) return `Too many failed attempts. Sign-in is locked for ${mins(r.lockedMs)} minutes for security.`;
+    const base = m === 'staff' ? 'Wrong username or password.' : 'Wrong mobile number or PIN.';
     return r.attemptsLeft !== undefined && r.attemptsLeft <= 3 ? `${base} ${r.attemptsLeft} attempt${r.attemptsLeft === 1 ? '' : 's'} left before lock.` : base;
   }
 
@@ -93,7 +93,7 @@ export default function Login() {
               <Field label="Mobile number">
                 <input autoFocus className={inputCls} value={id} onChange={(e) => setId(e.target.value)} inputMode="tel" autoComplete="username" placeholder="09XX XXX XXXX" />
               </Field>
-              <Field label="PIN" hint="Nakalimutan ang PIN? Magpa-reset sa front desk.">
+              <Field label="PIN" hint="Forgot your PIN? Ask the front desk to reset it.">
                 <input
                   className={cn(inputCls, 'tracking-[0.4em]')}
                   type="password"

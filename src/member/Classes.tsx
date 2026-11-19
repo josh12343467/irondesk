@@ -27,14 +27,14 @@ export default function MemberClasses() {
     const r = await actions.book(classId, m.id, date);
     setToast(
       r === 'ok'
-        ? { ok: true, text: `Booked ka na sa ${name}! See you there. 💪` }
+        ? { ok: true, text: `You're booked for ${name}! See you there. 💪` }
         : {
             ok: false,
             text:
-              r === 'full' ? 'Full na ang class na ito.'
-              : r === 'expired' ? 'Expired na ang membership mo sa araw na iyon.'
-              : r === 'duplicate' ? 'Naka-book ka na dito.'
-              : 'Hindi ma-book ang class na ito.',
+              r === 'full' ? 'This class is full.'
+              : r === 'expired' ? 'Your membership will have expired by that date.'
+              : r === 'duplicate' ? "You're already booked for this class."
+              : "This class can't be booked.",
           },
     );
   };

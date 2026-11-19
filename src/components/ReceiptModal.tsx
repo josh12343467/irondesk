@@ -60,7 +60,7 @@ export function ReceiptModal({ payment, onClose }: { payment: Payment | null; on
             <span>TOTAL</span>
             <span>{peso(payment.amount)}</span>
           </div>
-          <p className="mt-5 text-center font-sans text-xs text-zinc-500">Salamat! Keep showing up. 💪</p>
+          <p className="mt-5 text-center font-sans text-xs text-zinc-500">Thank you! Keep showing up. 💪</p>
           <p className="mt-3 border-t border-zinc-200 pt-3 text-center font-sans text-[10px] leading-snug text-zinc-500">
             THIS DOCUMENT IS NOT VALID FOR CLAIM OF INPUT TAX. This is an acknowledgement of payment only, not a BIR-registered
             invoice or official receipt. Ask the front desk for your BIR invoice.

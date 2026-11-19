@@ -87,7 +87,7 @@ export default function CloudLogin() {
     try {
       await verifyEmailCode(email, code);
     } catch {
-      setError('Mali o expired na ang code. Mag-request ng bago.');
+      setError('That code is wrong or has expired. Request a new one.');
       setCode('');
     } finally {
       setBusy(false);
@@ -105,8 +105,8 @@ export default function CloudLogin() {
       setPassword('');
       setError(
         r.lockedMs
-          ? `Too many failed attempts. Naka-lock muna ng ${Math.ceil(r.lockedMs / 60_000)} minuto para sa security.`
-          : `Mali ang email o password.${r.attemptsLeft !== undefined && r.attemptsLeft <= 3 ? ` ${r.attemptsLeft} attempts left before lock.` : ''}`,
+          ? `Too many failed attempts. Sign-in is locked for ${Math.ceil(r.lockedMs / 60_000)} minutes for security.`
+          : `Wrong email or password.${r.attemptsLeft !== undefined && r.attemptsLeft <= 3 ? ` ${r.attemptsLeft} attempts left before lock.` : ''}`,
       );
     }
   }
@@ -128,7 +128,7 @@ export default function CloudLogin() {
       <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6">
         {mode === 'member' && !codeSent && (
           <form onSubmit={sendCode} className="space-y-4">
-            <Field label="Email" hint="Ang email na ginamit mo noong nag-register sa front desk.">
+            <Field label="Email" hint="The email you gave the front desk when you registered.">
               <input autoFocus className={inputCls} type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" placeholder="juan@gmail.com" />
             </Field>
             {error && <ErrorText text={error} />}
@@ -141,7 +141,7 @@ export default function CloudLogin() {
         {mode === 'member' && codeSent && (
           <form onSubmit={verify} className="space-y-4">
             <p className="text-sm text-zinc-400">
-              Nagpadala kami ng code sa <span className="font-medium text-zinc-100">{email.trim().toLowerCase()}</span>. Check din ang Spam folder.
+              We sent a code to <span className="font-medium text-zinc-100">{email.trim().toLowerCase()}</span>. Check your Spam folder too.
             </p>
             <Field label="Sign-in code">
               <input
@@ -185,7 +185,7 @@ export default function CloudLogin() {
         )}
       </div>
       <p className="mt-4 text-center text-xs text-zinc-500">
-        {mode === 'member' ? 'Walang password na kailangan: magpapadala kami ng code sa email mo.' : 'Staff accounts are created by an admin.'}
+        {mode === 'member' ? 'No password needed: we email you a sign-in code.' : 'Staff accounts are created by an admin.'}
       </p>
     </Shell>
   );
@@ -256,10 +256,10 @@ export function NoAccessScreen() {
   return (
     <Shell footer={false}>
       <div className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 text-sm">
-        <h2 className="text-base font-semibold">Walang account na naka-link</h2>
+        <h2 className="text-base font-semibold">No account linked</h2>
         <p className="text-zinc-400">
-          Na-verify ang email mo, pero wala pang member o staff record na naka-link dito. Kung member ka, siguraduhing ito ang email na
-          binigay mo sa front desk, o magpa-update sa kanila.
+          Your email is verified, but no member or staff record is linked to it yet. If you're a member, make sure this is the email you
+          gave the front desk, or ask them to update it.
         </p>
         <Button className="w-full" variant="outline" onClick={() => actions.logout()}>
           Sign out
