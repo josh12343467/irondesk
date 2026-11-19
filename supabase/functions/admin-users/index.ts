@@ -4,16 +4,23 @@
 //
 // Deploy:  npx supabase functions deploy admin-users
 // Env:     SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY are provided automatically.
-//          Optionally set ALLOWED_ORIGIN (e.g. https://your-gym.vercel.app) to restrict CORS.
+//          Optionally set ALLOWED_ORIGIN to a comma-separated list of sites allowed to call this
+//          function from a browser, e.g. "https://your-gym.vercel.app,http://localhost:5173".
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
-const ORIGIN = Deno.env.get('ALLOWED_ORIGIN') ?? '*';
-const cors = {
-  'Access-Control-Allow-Origin': ORIGIN,
+const ALLOWED = (Deno.env.get('ALLOWED_ORIGIN') ?? '*')
+  .split(',')
+  .map((o) => o.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
+// Reflect the caller's origin only if it is on the list (browsers then block every other site).
+const corsFor = (origin: string | null) => ({
+  'Access-Control-Allow-Origin': ALLOWED.includes('*') ? '*' : origin && ALLOWED.includes(origin) ? origin : ALLOWED[0],
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   Vary: 'Origin',
-};
+});
+let cors = corsFor(null);
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
 
@@ -26,6 +33,7 @@ function passwordProblem(pw: string, email: string): string | null {
 }
 
 Deno.serve(async (req) => {
+  cors = corsFor(req.headers.get('Origin'));
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
 
